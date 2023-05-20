@@ -48,7 +48,7 @@ describe("Show User Profile", () => {
     }
     await createUserUseCase.execute(user);
 
-    const loggedUser = await authenticateUserUseCase.execute({
+    await authenticateUserUseCase.execute({
       email: user.email,
       password: user.password,
     })

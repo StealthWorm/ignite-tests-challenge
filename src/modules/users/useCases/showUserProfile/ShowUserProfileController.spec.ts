@@ -8,7 +8,7 @@ import createConnection from "../../../../database";
 
 let connection: Connection;
 
-describe("Authenticate User Controller", () => {
+describe("Show Profile User Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
@@ -27,27 +27,22 @@ describe("Authenticate User Controller", () => {
     await connection.close();
   });
 
-  it("should be able to authenticate a new user", async () => {
-    const response = await request(app).post("/api/v1/sessions").send({
+  it("should be able to retrieve the profile of an authenticated user", async () => {
+    const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "admin@rentx.com.br",
       password: "admin",
     })
-    // const { token } = responseToken.body;
 
-    // const response = await request(app)
-    //   .post("/api/v1/sessions")
-    //   .send({
-    //     name: "teste",
-    //     email: "teste@email.com.br",
-    //     password: "teste",
-    //   })
-    //   .set({
-    //     Authorization: `Bearer ${token}`
-    //   })
+    const { token } = responseToken.body;
 
-    expect(response.status).toBe(200);
-    expect(response.body.user).toHaveProperty("id");
-    expect(response.body.user.name).toBe("admin");
-    expect(response.body.token).toBeDefined();
+    const response = await request(app)
+      .get("/api/v1/profile")
+      .set({
+        Authorization: `Bearer ${token}`
+      })
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body.email).toBe("admin@rentx.com.br");
   })
 })

@@ -1,5 +1,3 @@
-import { AppError } from "../../../../shared/errors/AppError";
-
 import { InMemoryUsersRepository } from "../../../users/repositories/in-memory/InMemoryUsersRepository";
 import { InMemoryStatementsRepository } from "../../repositories/in-memory/InMemoryStatementsRepository";
 
@@ -12,7 +10,6 @@ import { CreateUserUseCase } from "../../../users/useCases/createUser/CreateUser
 import { AuthenticateUserUseCase } from "../../../users/useCases/authenticateUser/AuthenticateUserUseCase";
 import { hash } from "bcryptjs";
 import { CreateStatementError } from "./CreateStatementError";
-
 
 let usersRepositoryInMemory: InMemoryUsersRepository;
 let statementsRepositoryInMemory: InMemoryStatementsRepository;
